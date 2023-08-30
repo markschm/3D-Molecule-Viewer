@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@300&family=Dosis:wght@400;600&family=Montserrat:wght@300&family=PT+Sans:wght@700&display=swap');
+
+*, body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    text-align: center;
+    color: #031927;
+}
+
+html {
+    background-image: linear-gradient(#FFF, #FFF, #508AA8, #508AA8, #508AA8, #508AA8);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body {
+    height: 100vh;
+}
+
+#main-content {
+    height: 75%;
+    background-color: #508AA8;
+}
+
+.row-flex-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.section-highlight {
+    padding: 30px;
+    margin: auto;
+    border-radius: 15px;
+    background-color: #67A2BF;
+}
+
+.page {
+    padding: 22px;
+}
+
+
+/* Default Fonts */
+h1 {
+    font-size: 60px;
+    color: #508AA8;
+    font-family: "PT Sans", sans-serif;
+}
+
+h2 {
+    font-size: 30px;
+    padding-bottom: 20px;
+    font-family: "Dosis", sans-serif;
+}
+
+h3 {
+    font-size: 23px;
+    padding: 5px;
+    font-family: "Dosis", sans-serif;
+}
+
+label {
+    font-size: 20px;
+    /* font-family: "Catamaran", sans-serif; */
+}
+
+option {
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+}
+
+
+/* Input */
+input {
+    margin: 10px;
+}
+
+.action-button {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 15px;
+    text-align: center;
+
+    font-family: "Dosis", sans-serif;
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+div > .g-button {
+    margin-top: 30px;
+}
+
+.g-button {
+    background-color: #8DDCA4;
+}
+
+.g-button:hover {
+    background-color: #53d478;
+}
+
+.r-button {
+    background-color: #F49097;
+}
+
+.r-button:hover {
+    background-color: #ee6b74;
+}
+
+input[type=file] {
+    font-size: 20px;
+}
+
+input[type=text], input[type=number] {
+    padding: 2px;
+    font-size: 20px;
+}
+
+input[type=text]:focus, input[type=text]:target,
+input[type=number]:focus, input[type=number]:target,
+select:focus {
+    outline: none;
+}
+
+input[type=color] {
+    margin-top: 20px;
+}
+
+#element-code {
+    width: 93px;
+}
+
+option {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+select {
+    width: 70%;
+    height: max(225px, 35vh);
+}
+
+
+/* Tabs */
+#tabs button {
+    padding: 16px;
+    width: 33%;
+    background-color: #9DD1F1;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    
+    font-size: 20px;
+}
+
+#tabs button:hover {
+    background-color: #67A2BF;
+}
+
+/* TESTING - maybe remove this depending on how i decide to do
+the tab switching*/
+#tabs button.active {
+    background-color: #508AA8;
+}
+
+
+/* Upload File Section */
+.upload-box {
+    padding: 10px;
+    width: 400px;
+}
+
+#upload-button {
+    width: 160px;
+}
+
+
+/* View Molecule Section */
+#view-molecule-body {
+    width: 70%;
+}
+
+#molecule-title {
+    flex-grow: 1;
+}
+
+#molecule-table-header {
+    width: 70%;
+    margin: auto;
+}
+
+#view-button {
+    width: 160px;
+}
+
+table {
+    width: 100%;
+}
+
+td:first-child {
+    width: 60%;
+}
+
+/* Elements Section */
+#elements-body {
+    margin: auto;
+    width: min(1000px, 70%);
+}

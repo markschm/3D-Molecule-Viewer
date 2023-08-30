@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecule Viewer</title>
+    
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    
+    <h1>Molecule Viewer</h1>
+
+    <div id="tabs">
+        <button id="upload-file-tab" onclick="openSection(event, 'upload-file-page')" class="tab">Upload File</button>
+            
+        <!-- default tab on page load -->
+        <button id="view-molecule-tab" onclick="openSection(event, 'view-molecule-page')" class="tab">View Molecule</button> 
+            
+        <button id="elements-tab" onclick="openSection(event, 'elements-page')" class="tab">Add/Remove Elements</button>
+    </div>
+
+
+    <div id="main-content">
+
+        <!-- upload file section -->
+        <div id="upload-file-page" class="page">
+            <h2>File Upload</h2>
+
+            <div>
+                <form id="upload-form">
+                    <div class="section-highlight upload-box">
+                        <label>Enter Molecule Name</label>
+                        <br>
+                        <input id="upload-molecule-name" name="mol_name" type="text" placeholder="Oxygen"/>
+                    </div>
+    
+                    <br>
+
+                    <div class="section-highlight upload-box">
+                        <input id="file" type="file" name="file" accept=".sdf"/>
+                    </div>
+        
+                    <div>
+                        <input id="upload-button" class="action-button g-button" type="submit" value="Upload Molecule"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- view molecule section -->
+        <div id="view-molecule-page" class="page">
+            <h2>Select A Molecule To View</h2>
+
+            <div id="view-molecule-body" class="section-highlight">
+                <div id="molecule-table-header" class="row-flex-container">
+                    <h3 id="molecule-title">Molecule Name</h3>
+                    <h3># of Atoms</h3>
+                    <h3># of Bonds</h3>
+                </div>
+
+                <form action="molecule" enctype="multipart/form-data" method="post">
+                    <select name="mol-list" id="molecule-list" size="8"></select>
+    
+                    <div>
+                        <!-- <button id="view-button" class="action-button g-button">View Molecule</button> -->
+                        <input id="view-button" class="action-button g-button" type="submit" value="View Molecule"/>
+                    </div>
+                </form>
+            </div>
+
+            <div id="svg-area"></div>
+        </div>
+
+
+        <!-- add/remove element section -->
+        <section id="elements-page" class="page">
+            <h2>Add or Remove Elements</h2>
+
+            <div id="elements-body" class="row-flex-container">
+
+                <!-- element list / remove section -->
+                <div class="section-highlight">
+                    <h3>Select Element To Remove</h3>
+    
+                    <select id="element-list" size="8"></select>
+                    <button id="remove-element-button" class="action-button r-button">Remove Element</button>
+                </div>
+    
+
+                <!-- add element form -->
+                <div class="section-highlight">
+                    <h3>Add Element</h3>
+                    <br>
+                        
+                    <div class="row-flex-container">
+                        <div>
+                            <label>Element Number</label>
+                            <br>
+                            <input id="element-number" type="number" min="1" max="118" placeholder="8"/>
+        
+                            <br>
+            
+                            <label>Element Code</label>
+                            <br>
+                            <input id="element-code" type="text" placeholder="O"/>
+        
+                            <br>
+            
+                            <label>Element Name</label>
+                            <br>
+                            <input id="element-name" type="text" placeholder="Oxygen"/>
+            
+                            <br>
+    
+                            <label>Radius</label>
+                            <br>
+                            <input id="element-radius" type="number" min="1" max="100" placeholder="40"/>
+                        </div>
+
+                        <div>
+                            <label>Color 1</label>
+                            <input id="element-color1" type="color" value="#FF0000"/>
+                
+                            <br><br>
+
+                            <label>Color 2</label>
+                            <input id="element-color2" type="color" value="#050000"/>
+            
+                            <br><br>
+
+                            <label>Color 3</label>
+                            <input id="element-color3" type="color" value="#020000"/>
+
+                            <br>
+
+                            <button id="add-element-button" class="action-button g-button">Add Element</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

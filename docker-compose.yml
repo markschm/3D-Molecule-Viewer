@@ -1,0 +1,9 @@
+version: '3.0'
+services:
+  backend:
+    container_name: 3d_molecule_viewer
+    ports:
+      - 8080:8080
+    build:
+      context: .
+      dockerfile: Dockerfile
