@@ -1,4 +1,5 @@
-import MolDisplay
+from mol_constants import *
+import mol_display
 import sqlite3
 import os
 
@@ -9,12 +10,9 @@ class Database:
     # if reset is set to true delete molecule.db to start a fresh database
     def __init__(self, reset=False):
 
-
-        # if reset is true and database exists
         if reset == True and os.path.exists("molecules.db"):
             os.remove("molecules.db")
 
-        # open database connection with molecules.db
         self.conn = sqlite3.connect("molecules.db")
 
 
@@ -163,7 +161,7 @@ class Database:
     def add_molecule(self, name, fp):
         
         # create a molecule object
-        mol = MolDisplay.Molecule()
+        mol = mol_display.Molecule()
 
         # parse molecule file
         if not mol.parse(fp):
@@ -175,20 +173,20 @@ class Database:
 
         # call add atom and add bond for each atom and bond in molecule
         for i in range(mol.atom_no):
-            self.add_atom(name, MolDisplay.Atom(mol.get_atom(i)))
+            self.add_atom(name, mol_display.Atom(mol.get_atom(i)))
 
         for i in range(mol.bond_no):
-            self.add_bond(name, MolDisplay.Bond(mol.get_bond(i)))
+            self.add_bond(name, mol_display.Bond(mol.get_bond(i)))
 
         self.conn.commit()
 
         return True
 
     
-    # returns a MolDisplay.Molecule object filled with the atoms and bonds
+    # returns a mol_display.Molecule object filled with the atoms and bonds
     # from molecules.db that are associated with the molecule with the given name
     def load_mol(self, name):
-        mol = MolDisplay.Molecule()
+        mol = mol_display.Molecule()
 
         # query all atoms associated with molecule of passed in name
         atoms = self.conn.execute(
@@ -314,7 +312,7 @@ class Database:
         for element in elements:
             name, color1, color2, color3 = element
 
-            radial_str += MolDisplay.radialGradientSVG % (name, color1, color2, color3)
+            radial_str += RADIAL_GRADIENT_SVG % (name, color1, color2, color3)
 
         return radial_str
 
@@ -327,26 +325,26 @@ class Database:
 # for testing __init__, __setitem__, add_molecule, add_atom, add_bond
 ###############################################################################
 if __name__ == "__main__":
-    db = Database(reset=True);
-    db.create_tables();
+    db = Database(reset=True)
+    db.create_tables()
 
 
     # testing __setitem__
-    db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 );
-    db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 );
-    db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 );
-    db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 );
+    db['Elements'] = ( 1, 'H', 'Hydrogen', 'FFFFFF', '050505', '020202', 25 )
+    db['Elements'] = ( 6, 'C', 'Carbon', '808080', '010101', '000000', 40 )
+    db['Elements'] = ( 7, 'N', 'Nitrogen', '0000FF', '000005', '000002', 40 )
+    db['Elements'] = ( 8, 'O', 'Oxygen', 'FF0000', '050000', '020000', 40 )
 
 
     # testing add_molecule, add_atom, add_bond
-    fp = open( 'sdf/water-3D-structure-CT1000292221.sdf' );
+    fp = open( 'sdf/water-3D-structure-CT1000292221.sdf' )
     db.add_molecule( 'Water', fp );
 
-    fp = open( 'sdf/caffeine-3D-structure-CT1001987571.sdf' );
-    db.add_molecule( 'Caffeine', fp );
+    fp = open( 'sdf/caffeine-3D-structure-CT1001987571.sdf' )
+    db.add_molecule( 'Caffeine', fp )
 
-    fp = open( 'sdf/CID_31260.sdf' );
-    db.add_molecule( 'Isopentanol', fp );
+    fp = open( 'sdf/CID_31260.sdf' )
+    db.add_molecule( 'Isopentanol', fp )
 
     fp = open( 'sdf/random.sdf' )
     db.add_molecule( 'NightmareTest', fp)
@@ -356,17 +354,17 @@ if __name__ == "__main__":
 
 
     # display tables
-    print( db.conn.execute( "SELECT * FROM Elements;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM Elements;" ).fetchall() )
 
-    print( db.conn.execute( "SELECT * FROM Molecules;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM Molecules;" ).fetchall() )
 
-    print( db.conn.execute( "SELECT * FROM Atoms;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM Atoms;" ).fetchall() )
 
-    print( db.conn.execute( "SELECT * FROM Bonds;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM Bonds;" ).fetchall() )
 
-    print( db.conn.execute( "SELECT * FROM MoleculeAtom;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM MoleculeAtom;" ).fetchall() )
 
-    print( db.conn.execute( "SELECT * FROM MoleculeBond;" ).fetchall() );
+    print( db.conn.execute( "SELECT * FROM MoleculeBond;" ).fetchall() )
 
 
 ###############################################################################
@@ -378,13 +376,13 @@ if __name__ == "__main__":
 
     mol = db.load_mol("Water")
 
-    MolDisplay.radius = db.radius();
-    MolDisplay.element_name = db.element_name();
-    MolDisplay.header += db.radial_gradients();
+    mol_display.radius = db.radius()
+    mol_display.element_name = db.element_name()
+    HEADER += db.radial_gradients()
 
     for molecule in [ 'Water', 'Caffeine', 'Isopentanol', 'NightmareTest', 'Ethane' ]:
-        mol = db.load_mol( molecule );
-        mol.sort();
-        fp = open( molecule + ".svg", "w" );
-        fp.write( mol.svg() );
-        fp.close();
+        mol = db.load_mol( molecule )
+        mol.sort()
+        fp = open( molecule + ".svg", "w" )
+        fp.write( mol.svg() )
+        fp.close()

@@ -8,9 +8,9 @@ RUN apt-get update && \
 COPY ./ /app
 WORKDIR /app
 
-ENV LD_LIBRARY_PATH=/app
+ENV LD_LIBRARY_PATH=/app/backend
 
-RUN make -C /app
+RUN make -C /app/backend
 
 CMD echo 'SERVER STARTING: http://localhost:8080/index.html'
-CMD python3 server.py 8080
+CMD python3 backend/server.py 8080

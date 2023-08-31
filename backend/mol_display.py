@@ -1,33 +1,8 @@
+from mol_constants import *
 import molecule
 import re
 
-#############################################################################
-# Pre-defined constants
 
-header = """<svg version="1.1" width="1000" height="1000"
-                    xmlns="http://www.w3.org/2000/svg">"""
-
-footer = """\n</svg>"""
-
-radialGradientSVG = """
- <radialGradient id="%s" cx="-50%%" cy="-50%%" r="220%%" fx="20%%" fy="20%%">
-  <stop offset="0%%" stop-color="#%s"/>
-  <stop offset="50%%" stop-color="#%s"/>
-  <stop offset="100%%" stop-color="#%s"/>
- </radialGradient>"""
-
-linearGradientSVG = """
- <linearGradient id="%s" x1="%.2f" y1="%.2f" x2="%.2f" y2="%.2f" gradientUnits="userSpaceOnUse">
-  <stop offset="0%%" stop-color="#454545" />
-  <stop offset="25%%" stop-color="#606060" />
-  <stop offset="50%%" stop-color="#454545" />
-  <stop offset="100%%" stop-color="#252525" />
- </linearGradient>"""
-
-offsetx = 500
-offsety = 500
-
-#############################################################################
 # wrapper class for the c atom class/struct
 # strores c_atom clas/struct as a member variable
 class Atom:
@@ -44,7 +19,7 @@ class Atom:
     # returns svg string representation of atom
     def svg(self):
         return ('\n <circle cx="%.2f" cy="%.2f" r="%d" fill="url(#%s)"/>' 
-            % (offsetx + (self.atom.x * 100), offsety + (self.atom.y * 100), radius.get(self.atom.element, radius["00"]), element_name.get(self.atom.element, element_name["00"])))
+            % (OFFSET_X + (self.atom.x * 100), OFFSET_Y + (self.atom.y * 100), radius.get(self.atom.element, radius["00"]), element_name.get(self.atom.element, element_name["00"])))
 
 
 # wrapper class for the c bond class/struct
@@ -67,17 +42,17 @@ class Bond:
         BOND_RADIUS = 10
 
         # compute values with svg offsets
-        x1 = offsetx + (self.bond.x1 * 100) + (self.bond.dy * BOND_RADIUS)
-        y1 = offsety + (self.bond.y1 * 100) - (self.bond.dx * BOND_RADIUS)
+        x1 = OFFSET_X + (self.bond.x1 * 100) + (self.bond.dy * BOND_RADIUS)
+        y1 = OFFSET_Y + (self.bond.y1 * 100) - (self.bond.dx * BOND_RADIUS)
 
-        x2 = offsetx + (self.bond.x1 * 100) - (self.bond.dy * BOND_RADIUS)
-        y2 = offsety + (self.bond.y1 * 100) + (self.bond.dx * BOND_RADIUS) 
+        x2 = OFFSET_X + (self.bond.x1 * 100) - (self.bond.dy * BOND_RADIUS)
+        y2 = OFFSET_Y + (self.bond.y1 * 100) + (self.bond.dx * BOND_RADIUS) 
 
-        x3 = offsetx + (self.bond.x2 * 100) - (self.bond.dy * BOND_RADIUS)
-        y3 = offsety + (self.bond.y2 * 100) + (self.bond.dx * BOND_RADIUS)
+        x3 = OFFSET_X + (self.bond.x2 * 100) - (self.bond.dy * BOND_RADIUS)
+        y3 = OFFSET_Y + (self.bond.y2 * 100) + (self.bond.dx * BOND_RADIUS)
 
-        x4 = offsetx + (self.bond.x2 * 100) + (self.bond.dy * BOND_RADIUS)
-        y4 = offsety + (self.bond.y2 * 100) - (self.bond.dx * BOND_RADIUS)
+        x4 = OFFSET_X + (self.bond.x2 * 100) + (self.bond.dy * BOND_RADIUS)
+        y4 = OFFSET_Y + (self.bond.y2 * 100) - (self.bond.dx * BOND_RADIUS)
 
 
         # compute bond cap values
@@ -100,7 +75,7 @@ class Bond:
 
 
         # fill in values for svg elements
-        poly_linear_gradient = linearGradientSVG % (bond_id , x1, y1, x2, y2)
+        poly_linear_gradient = LINEAR_GRADIENT_SVG % (bond_id , x1, y1, x2, y2)
 
         polygon = '\n <polygon points="%.2f,%.2f %.2f,%.2f %.2f,%.2f %.2f,%.2f" fill="url(#%s)"/>' \
                     % (x1, y1, x2, y2, x3, y3, x4, y4, bond_id)
@@ -133,7 +108,7 @@ class Molecule (molecule.molecule):
     # return svg string representation of molecule using bonds and atoms
     def svg(self):
         svg_str = ""
-        svg_str += header + gradients
+        svg_str += HEADER + gradients
 
         atom_index, bond_index = 0, 0
         # while not at last atom or bond in their lists
@@ -157,7 +132,7 @@ class Molecule (molecule.molecule):
             svg_str += Bond(self.get_bond(bond_index)).svg()
             bond_index += 1
 
-        svg_str += footer
+        svg_str += FOOTER
 
         return svg_str
 

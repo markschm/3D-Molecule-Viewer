@@ -1,7 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from io import BytesIO, TextIOWrapper
-from molsql import Database
-import MolDisplay
+from mol_sql import Database
+import mol_display
 import urllib
 import sys
 import re
@@ -14,9 +14,10 @@ import re
 db = Database()
 db.create_tables()
 
-MolDisplay.radius = db.radius()
-MolDisplay.element_name = db.element_name()
-MolDisplay.gradients = db.radial_gradients()
+
+mol_display.radius = db.radius()
+mol_display.element_name = db.element_name()
+mol_display.gradients = db.radial_gradients()
 
 
 # list of paths
@@ -47,7 +48,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
 
 
             # read file 
-            fp = open(self.path[1:]) # remove leading '/' from file path
+            fp = open(f"frontend{self.path}") # remove leading '/' from file path
             page = fp.read()
             fp.close()
 
@@ -149,9 +150,9 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
                     else:
                         response = e[2]
 
-                    MolDisplay.radius = db.radius()
-                    MolDisplay.element_name = db.element_name()
-                    MolDisplay.gradients = db.radial_gradients()
+                    mol_display.radius = db.radius()
+                    mol_display.element_name = db.element_name()
+                    mol_display.gradients = db.radial_gradients()
 
 
             # remove element
@@ -163,9 +164,9 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
                     db.delete_element(name)
                     response = name
 
-                    MolDisplay.radius = db.radius()
-                    MolDisplay.element_name = db.element_name()
-                    MolDisplay.gradients = db.radial_gradients()
+                    mol_display.radius = db.radius()
+                    mol_display.element_name = db.element_name()
+                    mol_display.gradients = db.radial_gradients()
 
                 else:
                     response = "Error. No Element Selected"
@@ -174,10 +175,6 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
 
             # view molecule
             elif self.path == "/molecule":
-
-                print("STOPPER")
-                print(form_data)
-                print("STOPPER", flush=True)
 
                 # TODO: made change here look into doing it better way
                 if len(form_data) > 0:
