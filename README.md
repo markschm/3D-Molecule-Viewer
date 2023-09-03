@@ -6,7 +6,7 @@ In root directory build and run:
 > docker-compose up
 
 In browser go to:
-http://localhost:8080/index.html
+http://localhost:8080/
 ```
 
 ## Features (update)
@@ -28,6 +28,7 @@ didn't completely finish assignment because I didn't give myself enough time :( 
 - fix the mini changes that I made from environment change
 - finish the assignment with rotations and stuff
 - explain what assignment can do and add some sdf files for people to try
+- update 404 page
 
 
 ## Example Endpoint structures
@@ -74,9 +75,9 @@ Server Receives:
 ```
 {
     'element': {
-        'elementName': 'Oxygen',
-        'elementCode': 'O',
-        'elementNumber': 8,
+        'name': 'Oxygen',
+        'code': 'O',
+        'number': 8,
         'radius': 40,
         'color1': #FF0000,
         'color2': #00FF00,

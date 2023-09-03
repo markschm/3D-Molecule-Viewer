@@ -1,5 +1,5 @@
-from mol_constants import *
-import molecule
+from backend.mol_constants import *
+from backend import molecule
 import re
 
 

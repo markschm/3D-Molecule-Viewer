@@ -1,5 +1,5 @@
-from mol_constants import *
-import mol_display
+from backend.mol_constants import *
+from backend import mol_display
 import sqlite3
 import os
 
