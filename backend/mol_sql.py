@@ -13,7 +13,7 @@ class Database:
         if reset == True and os.path.exists("molecules.db"):
             os.remove("molecules.db")
 
-        self.conn = sqlite3.connect("molecules.db")
+        self.conn = sqlite3.connect("molecules.db", check_same_thread=False)
 
 
     # Create the molecule.db tables if they don't already exist

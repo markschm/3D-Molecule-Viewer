@@ -32,23 +32,21 @@
             <h2>File Upload</h2>
 
             <div>
-                <form id="upload-form">
-                    <div class="section-highlight upload-box">
-                        <label>Enter Molecule Name</label>
-                        <br>
-                        <input id="upload-molecule-name" name="mol_name" type="text" placeholder="Water"/>
-                    </div>
-    
+                <div class="section-highlight upload-box">
+                    <label>Enter Molecule Name</label>
                     <br>
+                    <input id="upload-molecule-name" name="mol_name" type="text" placeholder="Water"/>
+                </div>
 
-                    <div class="section-highlight upload-box">
-                        <input id="file" type="file" name="file" accept=".sdf"/>
-                    </div>
-        
-                    <div>
-                        <input id="upload-button" class="action-button g-button" type="submit" value="Upload Molecule"/>
-                    </div>
-                </form>
+                <br>
+
+                <div class="section-highlight upload-box">
+                    <input id="file" type="file" name="file" accept=".sdf"/>
+                </div>
+    
+                <div>
+                    <button id="upload-button" class="action-button g-button">Upload Molecule</button>
+                </div>
             </div>
         </div>
 
