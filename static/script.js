@@ -55,14 +55,16 @@ function moleculeRow(csv) {
 function loadMoleculeList() {
     $.get("/molecule_data")
         .done(function(data) {
-            // in future change to json or something for sending the data
-            let mol_data = data.split("\n");
+            console.log(data);
 
-            for (let i = 0; i < mol_data.length; i++) {
-                if (mol_data[i].length > 0) {
-                    $("#molecule-list").append(moleculeRow(mol_data[i]));
-                }
-            }
+            // // in future change to json or something for sending the data
+            // let mol_data = data.split("\n");
+
+            // for (let i = 0; i < mol_data.length; i++) {
+            //     if (mol_data[i].length > 0) {
+            //         $("#molecule-list").append(moleculeRow(mol_data[i]));
+            //     }
+            // }
         })
         .fail(function(e) {
             console.log("Error. Couldn't Retrieve Molecule Data.");
@@ -75,13 +77,15 @@ function loadMoleculeList() {
 function loadElementList() {
     $.get("/elements_data")
     .done(function(data) {
-        let elements = data.split("\n");
+        console.log(data);
+        
+        // let elements = data.split("\n");
 
-        for (let i = 0; i < elements.length; i++) {
-            if (elements[i].length > 0) {
-                $("#element-list").append(`<option id="element-${elements[i]}">${elements[i]}</option>`);
-            }
-        }
+        // for (let i = 0; i < elements.length; i++) {
+        //     if (elements[i].length > 0) {
+        //         $("#element-list").append(`<option id="element-${elements[i]}">${elements[i]}</option>`);
+        //     }
+        // }
     })
     .fail(function(e) {
         console.log("Error. Couldn't Retrieve Elements.")

@@ -14,12 +14,84 @@ images here
 
 
 ## Description (update)
-didn't completely finish assignment because I didn't give myself enough time :( . Wanted to setup the project to be run anywhere with docker since before it was only able to run on school server with the environment. only few tweaks were made to move it from running on school server to docker. Those changes are def not what I want to keep so those will be changing very soon.
+didn't completely finish assignment because I didn't give myself enough time :( . Wanted to setup the project to be run anywhere with docker since before it was only able to run on school server with the environment. only few tweaks were made to move it from running on school server to docker. Those changes are def not what I want to keep so those will be changing very soon. explain y i used docker
 
 ## Todo
-- add file structure we weren't allowed to in assignment +
+- update all endpoints to send and receive json responses
+    - update all molsql functions to return json structured objects that can easily be converted
+    - switch to flask server
+    - just setup endpoints and then fix the javascript later, just make list of endpoints and return structure so js stuff after will be easy using fetch
+    - only issue is sending the file with the weird format as it's sent but I guess that can be figured out
+- add short description to be shown on github
 - fix spacing issue in molecule selection area
 - add photos of program in use
-- we used jquery but I wanna use something newer
+- fix the mini changes that I made from environment change
 - finish the assignment with rotations and stuff
 - explain what assignment can do and add some sdf files for people to try
+
+
+## Example Endpoint structures
+### /molecule_list GET
+Server Response:
+```
+{
+    'molecules': [
+        {
+            'name': 'Water',
+            'atoms: 3,
+            'bonds': 2
+        },
+        {
+            ...
+        }
+    ]
+}
+```
+
+### /element_list GET
+Server Response:
+```
+{
+    'elements': [
+        'Default',
+        'Hydrogen',
+        ...
+    ]
+}
+```
+
+### /upload POST
+Server Receives: File  
+Server Response:
+```
+{
+    'message': 'status message'
+}
+```
+
+### /elements PUT
+Server Receives:
+```
+{
+    'element': {
+        'elementName': 'Oxygen',
+        'elementCode': 'O',
+        'elementNumber': 8,
+        'radius': 40,
+        'color1': #FF0000,
+        'color2': #00FF00,
+        'color3': #0000FF
+    }
+}
+```
+
+### /elements/<element_name> DELETE
+
+### /molecule POST
+Server Receives:
+```
+{
+    'molecule': 'Water'
+}
+```
+Server redirects to baseurl/molecule with the Water svg displayed

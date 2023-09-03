@@ -234,13 +234,9 @@ class Database:
                                             WHERE MoleculeBond.MOLECULE_ID=Molecules.MOLECULE_ID) 
                                             FROM Molecules;""").fetchall()
 
-        data = ""
-        for molecule in molecule_data:
-            name, atoms, bonds = molecule
+        molecules = [{'name': name, 'atoms': atoms, 'bonds': bonds} for name, atoms, bonds in molecule_data]
 
-            data += f"{name}, {atoms}, {bonds}\n"
-
-        return data
+        return {"molecules": molecules}
 
 
     # check if molecule already exists
@@ -260,11 +256,9 @@ class Database:
 
         elements = self.conn.execute("SELECT (ELEMENT_NAME) FROM Elements;")
 
-        data = ""
-        for e in elements:
-            data += f"{e[0]}\n"
+        elements = [element[0] for element in elements]
 
-        return data
+        return {'elements': elements}
 
 
     # returns a dictionary mapping the element codes to their radius values

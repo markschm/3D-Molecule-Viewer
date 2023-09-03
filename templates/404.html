@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Molecule Viewer</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}"/>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="script.js"></script> -->
+    <script src="{{url_for('static', filename='404.js')}}"></script>
+</head>
+<body>
+    
+    <h1>Molecule Viewer</h1>
+
+    <div id="tabs">
+        <button id="upload-file-tab" onclick="openSection(event, 'upload-file-page')" class="tab">Upload File</button>
+            
+        <!-- default tab on page load -->
+        <button id="view-molecule-tab" onclick="openSection(event, 'view-molecule-page')" class="tab">View Molecule</button> 
+            
+        <button id="elements-tab" onclick="openSection(event, 'elements-page')" class="tab">Add/Remove Elements</button>
+    </div>
+
+
+    <div id="main-content">
+        <h3>404 could not find page requested</h3>
+        <input/>
+        <!-- do something so this sends user back to home -->
+    </div>
+</body>
+</html>

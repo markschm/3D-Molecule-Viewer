@@ -5,6 +5,7 @@ import mol_display
 import urllib
 import sys
 import re
+import json
 
 # TODO: anything marked todo in here is super quick and awful changes
 # i added to get this working off the school server. need to go back and make changes
@@ -21,9 +22,9 @@ mol_display.gradients = db.radial_gradients()
 
 
 # list of paths
-public_files = ["/index.html", "/style.css", "/script.js", "/molecule.html"]
-resource_paths = ["/molecule_data", "/elements_data"]
-post_paths = ["/upload", "/molecule", "/remove_element", "/add_element"]
+PUBLIC_FILES = ["/index.html", "/style.css", "/script.js", "/molecule.html"]
+RESOURCES_PATHS = ["/molecule_data", "/elements_data"]
+POST_PATHS = ["/upload", "/molecule", "/remove_element", "/add_element"]
 
 
 class HTTPRequestHandler(BaseHTTPRequestHandler):
@@ -33,7 +34,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
 
         # if a public file is requested
-        if self.path in public_files: # if user visits root path
+        if self.path in PUBLIC_FILES: # if user visits root path
             self.send_response(200) # ok
 
             extension = self.path.split(".")[-1]
@@ -58,18 +59,20 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
 
 
         # data for molecule or element lists requested
-        elif self.path in resource_paths:
+        elif self.path in RESOURCES_PATHS:
             self.send_response(200)
 
             if self.path == "/molecule_data":
-                data = db.fetch_molecules()
+                data = json.dumps(db.fetch_molecules())
 
             elif self.path == "/elements_data":
-                data = db.fetch_elements()
+                data = json.dumps(db.fetch_elements())
 
 
             self.send_header("Content-length", len(data))
             self.end_headers()
+
+            # use jsondumps in write instead of above to reduce having it called in two spots
             self.wfile.write(bytes(data, "utf-8"))
 
 
@@ -85,7 +88,7 @@ class HTTPRequestHandler(BaseHTTPRequestHandler):
     # and then creates an molecule object to parse the data a display the svg of the molecule 
     def do_POST(self):
 
-        if self.path in post_paths:
+        if self.path in POST_PATHS:
             status = 200
             length = int(self.headers.get("Content-length"))
 
