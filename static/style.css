@@ -205,5 +205,10 @@ td:first-child {
 /* Elements Section */
 #elements-body {
     margin: auto;
-    width: min(1000px, 70%);
+    width: min(1000px, 72%);
+}
+
+/* Molecule Display */
+#svg-box {
+    background-color: white;
 }

@@ -7,28 +7,22 @@
     <title>Molecule Viewer</title>
     
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}"/>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="script.js"></script> -->
-    <script src="{{url_for('static', filename='index.js')}}"></script>
+    <script src="{{url_for('static', filename='back_home.js')}}"></script>
 </head>
 <body>
     
     <h1>Molecule Viewer</h1>
 
     <div id="tabs">
-        <button id="upload-file-tab" onclick="openSection(event, 'upload-file-page')" class="tab">Upload File</button>
-            
-        <!-- default tab on page load -->
-        <button id="view-molecule-tab" onclick="openSection(event, 'view-molecule-page')" class="tab">View Molecule</button> 
-            
-        <button id="elements-tab" onclick="openSection(event, 'elements-page')" class="tab">Add/Remove Elements</button>
+        <button id="back-home-tab" class="tab">Back Home</button>
+        <button class="tab">&nbsp;</button> 
+        <button class="tab">&nbsp;</button>
     </div>
 
-
-    <h1>Embedded in html</h1>
-    <div>
-        <!-- SVG to be embedded TODO: change this later to have better display -->
-        {{ svg_content | safe }}
+    <div id="main-content">
+        <div id="svg-box">
+            {{ svg_content | safe }}
+        </div>
     </div>
 </body>
 </html>

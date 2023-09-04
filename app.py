@@ -1,21 +1,20 @@
-from flask import Flask, jsonify, render_template, send_from_directory, request
+from flask import Flask, jsonify, render_template, request
 from backend.mol_sql import Database
 from backend import mol_display
 from io import TextIOWrapper
+
 
 # open connection to database
 db = Database()
 db.create_tables()
 
-mol_display.radius = db.radius()
-mol_display.element_name = db.element_name()
-mol_display.gradients = db.radial_gradients()
-
-
 app = Flask(__name__)
+
 
 # ##################################################################################
 # ENDPOINT DEFINITIONS
+# ##################################################################################
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
@@ -34,13 +33,13 @@ def element_list():
 @app.route('/upload', methods=['POST'])
 def upload():
     if 'file' not in request.files:
-        return jsonify({'message': 'No file selected'})
+        return jsonify({'message': 'No file selected'}), 400
 
     file = request.files['file']
 
     # Check if the file is empty
     if file.filename == '':
-        return jsonify({'message': 'Invalid file uploaded'})
+        return jsonify({'message': 'Invalid file uploaded'}), 400
     
     text_file_obj = TextIOWrapper(file)
     name = request.form.get('name')
@@ -55,15 +54,13 @@ def upload():
             'message': 'File uploaded successfully',
             'molecule': molecule}), 201
 
-    return jsonify({'message': 'Invalid file uploaded'}), 500
+    return jsonify({'message': 'Invalid file uploaded'}), 400
     
 
 @app.route('/elements', methods=['PUT'])
 def add_element():
     element = request.get_json()['element']
 
-    # TODO: check how colors are received here
-    # in mol_sql they can't have the # before hexadecimal value
     replaced = db.force_add_element((
         element['number'],
         element['code'],
@@ -86,15 +83,15 @@ def remove_element(element_name):
 
     db.delete_element(element_name)
 
-    mol_display.radius = db.radius()
-    mol_display.element_name = db.element_name()
-    mol_display.gradients = db.radial_gradients()
-
     return '', 204
 
 
 @app.route('/molecule/<molecule_name>', methods=['GET'])
-def v_molecule(molecule_name):
+def view_molecule(molecule_name):
+
+    mol_display.radius = db.radius()
+    mol_display.element_name = db.element_name()
+    mol_display.gradients = db.radial_gradients()
 
     if not db.molecule_exists(molecule_name):
         return not_found_error("error")
@@ -106,8 +103,6 @@ def v_molecule(molecule_name):
     return render_template('molecule.html', svg_content=svg)
 
 
-# TODO: setup better structure for 404.html
-# leave a link back to the main page from there
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
@@ -115,5 +110,6 @@ def not_found_error(error):
 
 # ##################################################################################
 # START SERVER
+# ##################################################################################
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

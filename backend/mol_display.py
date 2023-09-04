@@ -3,6 +3,10 @@ from backend import molecule
 import re
 
 
+gradients = ""
+element_name = {}
+radius = {}
+
 # wrapper class for the c atom class/struct
 # strores c_atom clas/struct as a member variable
 class Atom:

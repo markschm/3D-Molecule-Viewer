@@ -88,8 +88,7 @@ function appendElement(element) {
 function appendMolecule(molecule) {
     const newMolecule = document.createElement('option');
 
-    // TODO: fix this text -  
-    newMolecule.text = molecule.name + " : " + molecule.atoms + " : " + molecule.bonds;
+    newMolecule.text = molecule.name;
     newMolecule.value = molecule.name;
     newMolecule.id = `molecule-${molecule.name}`;
 
@@ -147,7 +146,7 @@ function addElementRequest() {
     .then(res => {
         if (res.status === 201) {
             appendElement(element.name);
-        } else {
+        } else if (res.status !== 200) {
             alert(UNEXPECTED_ERROR);
         }
     });
@@ -215,5 +214,5 @@ function viewMoleculeRequest() {
         return;
     }
 
-    window.location.href = `molecule/${molecule}`;
+    window.location.href = `/molecule/${molecule}`;
 }
