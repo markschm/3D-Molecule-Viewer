@@ -7,28 +7,22 @@ In root directory build and run:
 
 In browser go to:
 http://localhost:8080/
+
+example SDFs stored in ./assets/sdf_files
 ```
 
-## Features (update)
-images here
+
+## Description
+3D molecule viewer web application that allows users to upload molecule SDFs (Standard Data File) and get a 3D visual SVG representation. Users have the ability to edit elements properties including color and size, providing more customization to the displayed molecules. Built with a C library to interface with molecule data integrated with a Flask server and sqlite database. 
 
 
-## Description (update)
-didn't completely finish assignment because I didn't give myself enough time :( . Wanted to setup the project to be run anywhere with docker since before it was only able to run on school server with the environment. only few tweaks were made to move it from running on school server to docker. Those changes are def not what I want to keep so those will be changing very soon. explain y i used docker
-
-## Todo
-- update all endpoints to send and receive json responses
-    - update all molsql functions to return json structured objects that can easily be converted
-    - switch to flask server
-    - just setup endpoints and then fix the javascript later, just make list of endpoints and return structure so js stuff after will be easy using fetch
-    - only issue is sending the file with the weird format as it's sent but I guess that can be figured out
-- add short description to be shown on github
-- fix spacing issue in molecule selection area
-- add photos of program in use
-- fix the mini changes that I made from environment change
-- finish the assignment with rotations and stuff
-- explain what assignment can do and add some sdf files for people to try
-- update 404 page
+## Images
+![Aspirin Molecule](assets/Aspirin_1.png)
+![CID Molecule](assets/CID_1.png)
+![Conformer](assets/Conformer_1.png)
+![Home Page](assets/Home_Page.png)
+![Elements Page](assets/Elements_Page.png)
+![Upload Page](assets/Upload_Page.png)
 
 
 ## Example Endpoint structures
@@ -92,7 +86,15 @@ Server Receives:
 ```
 
 ### /elements/<element_name> DELETE
+```
 Delete selected element from database
+```
 
 ### /molecule/<molecule_name> GET
+```
 Server redirects and displays selected molecule
+```
+
+
+## Todo
+- molecule rotation through client interaction
