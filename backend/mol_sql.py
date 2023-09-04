@@ -237,6 +237,23 @@ class Database:
         molecules = [{'name': name, 'atoms': atoms, 'bonds': bonds} for name, atoms, bonds in molecule_data]
 
         return {"molecules": molecules}
+    
+    def fetch_molecule(self, name):
+        molecule_data = self.conn.execute("""SELECT Molecules.NAME, 
+                                            (SELECT COUNT(*) FROM MoleculeAtom 
+                                            WHERE MoleculeAtom.MOLECULE_ID=Molecules.MOLECULE_ID),
+                                            (SELECT COUNT(*) FROM MoleculeBond 
+                                            WHERE MoleculeBond.MOLECULE_ID=Molecules.MOLECULE_ID) 
+                                            FROM Molecules
+                                            WHERE Molecules.NAME=?;""", (name,)).fetchone()
+
+        molecule = {
+            'name': molecule_data[0],
+            'atoms': molecule_data[1],
+            'bonds': molecule_data[2]
+        }
+
+        return molecule
 
 
     # check if molecule already exists

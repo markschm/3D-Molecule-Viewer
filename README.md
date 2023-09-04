@@ -66,7 +66,12 @@ Server Receives: File
 Server Response:
 ```
 {
-    'message': 'status message'
+    'message': 'status message',
+    'molecule': {
+        'name': 'Water',
+        'atoms: 3,
+        'bonds': 2
+    }
 }
 ```
 
@@ -87,12 +92,7 @@ Server Receives:
 ```
 
 ### /elements/<element_name> DELETE
+Delete selected element from database
 
-### /molecule POST
-Server Receives:
-```
-{
-    'molecule': 'Water'
-}
-```
-Server redirects to baseurl/molecule with the Water svg displayed
+### /molecule/<molecule_name> GET
+Server redirects and displays selected molecule

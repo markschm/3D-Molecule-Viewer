@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, send_from_directory, request
 from backend.mol_sql import Database
 from backend import mol_display
+from io import TextIOWrapper
 
 # open connection to database
 db = Database()
@@ -13,7 +14,8 @@ mol_display.gradients = db.radial_gradients()
 
 app = Flask(__name__)
 
-
+# ##################################################################################
+# ENDPOINT DEFINITIONS
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
@@ -29,12 +31,31 @@ def element_list():
     return jsonify(db.fetch_elements())
 
 
-# TODO:
-# this one will need to be setup once I have front end not sure how files are sent
-# with flask and stuff
 @app.route('/upload', methods=['POST'])
 def upload():
-    return jsonify({'message': 'file uploaded successfully'})
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file selected'})
+
+    file = request.files['file']
+
+    # Check if the file is empty
+    if file.filename == '':
+        return jsonify({'message': 'Invalid file uploaded'})
+    
+    text_file_obj = TextIOWrapper(file)
+    name = request.form.get('name')
+
+    if db.molecule_exists(name):
+        return jsonify({'message': 'Molecule with this name already exists'}), 409
+    
+    elif db.add_molecule(name, text_file_obj):
+        molecule = db.fetch_molecule(name)
+
+        return jsonify({
+            'message': 'File uploaded successfully',
+            'molecule': molecule}), 201
+
+    return jsonify({'message': 'Invalid file uploaded'}), 500
     
 
 @app.route('/elements', methods=['PUT'])
@@ -72,12 +93,13 @@ def remove_element(element_name):
     return '', 204
 
 
-@app.route('/molecule', methods=['POST'])
-def view_molecule():
+@app.route('/molecule/<molecule_name>', methods=['GET'])
+def v_molecule(molecule_name):
 
-    molecule = request.get_json()['molecule']
+    if not db.molecule_exists(molecule_name):
+        return not_found_error("error")
 
-    mol = db.load_mol(molecule)
+    mol = db.load_mol(molecule_name)
     mol.sort()
     svg = mol.svg()
 
@@ -89,6 +111,7 @@ def view_molecule():
 @app.errorhandler(404)
 def not_found_error(error):
     return render_template('404.html'), 404
+
 
 # ##################################################################################
 # START SERVER
